@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# Java / Maven
+java-api/target/
+*.jar
+*.class
+java-api.zip
+
+# Node.js / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+
+# Go
+api/vendor/
+
+# Docker / OS
+.DS_Store
+.idea/
+*.log
