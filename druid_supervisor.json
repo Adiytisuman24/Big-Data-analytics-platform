@@ -1,0 +1,65 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker:29092"
+      },
+      "topic": "agent_execution_events",
+      "inputFormat": {
+        "type": "avro_schema_registry",
+        "url": "http://schema-registry:8081",
+        "binaryAsString": false
+      },
+      "useEarliestOffset": true
+    },
+    "dataSchema": {
+      "dataSource": "agent_execution_events",
+      "timestampSpec": {
+        "column": "event_time",
+        "format": "millis"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "agent_id",
+          "task_id",
+          "trace_id",
+          "model",
+          "tool",
+          "status"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "count"
+        },
+        {
+          "type": "longSum",
+          "name": "total_latency_ms",
+          "fieldName": "latency_ms"
+        },
+        {
+          "type": "longSum",
+          "name": "total_input_tokens",
+          "fieldName": "input_tokens"
+        },
+        {
+          "type": "longSum",
+          "name": "total_output_tokens",
+          "fieldName": "output_tokens"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "HOUR",
+        "queryGranularity": "MINUTE",
+        "rollup": true
+      }
+    },
+    "tuningConfig": {
+      "type": "kafka"
+    }
+  }
+}

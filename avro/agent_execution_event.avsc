@@ -1,0 +1,52 @@
+{
+  "namespace": "com.ai.analytics",
+  "type": "record",
+  "name": "AgentExecutionEvent",
+  "fields": [
+    {
+      "name": "event_time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "agent_id",
+      "type": "string"
+    },
+    {
+      "name": "task_id",
+      "type": "string"
+    },
+    {
+      "name": "trace_id",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "model",
+      "type": "string"
+    },
+    {
+      "name": "tool",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "status",
+      "type": "string"
+    },
+    {
+      "name": "latency_ms",
+      "type": "long"
+    },
+    {
+      "name": "input_tokens",
+      "type": "int"
+    },
+    {
+      "name": "output_tokens",
+      "type": "int"
+    }
+  ]
+}

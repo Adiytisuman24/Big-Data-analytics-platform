@@ -1,0 +1,88 @@
+services:
+  zookeeper:
+    image: zookeeper:3.5.10
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOO_MY_ID=1
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=FoolishPassword
+      - POSTGRES_USER=druid
+      - POSTGRES_DB=druid
+
+  coordinator:
+    image: apache/druid:30.0.0
+    container_name: coordinator
+    ports:
+      - "18081:8081"
+    command:
+      - coordinator
+    env_file:
+      - druid.env
+    depends_on: 
+      - zookeeper
+      - postgres
+
+  broker:
+    image: apache/druid:30.0.0
+    container_name: broker
+    ports:
+      - "8082:8082"
+    command:
+      - broker
+    env_file:
+      - druid.env
+    depends_on: 
+      - zookeeper
+      - postgres
+      - coordinator
+
+  historical:
+    image: apache/druid:30.0.0
+    container_name: historical
+    ports:
+      - "8083:8083"
+    command:
+      - historical
+    env_file:
+      - druid.env
+    depends_on: 
+      - zookeeper
+      - postgres
+      - coordinator
+
+  middlemanager:
+    image: apache/druid:30.0.0
+    container_name: middlemanager
+    ports:
+      - "8091:8091"
+      - "8100-8105:8100-8105"
+    command:
+      - middleManager
+    env_file:
+      - druid.env
+    depends_on: 
+      - zookeeper
+      - postgres
+      - coordinator
+
+  router:
+    image: apache/druid:30.0.0
+    container_name: router
+    ports:
+      - "8888:8888"
+    command:
+      - router
+    env_file:
+      - druid.env
+    depends_on:
+      - zookeeper
+      - postgres
+      - coordinator
