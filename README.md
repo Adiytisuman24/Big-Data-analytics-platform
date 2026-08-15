@@ -2,8 +2,6 @@
 
 > A production-style end-to-end Big Data pipeline that ingests AI-agent execution events in real-time, persists historical data in a lakehouse, and serves low-latency analytics through a modern React dashboard.
 
-![Architecture](docs/architecture.png)
-
 ## Architecture Overview
 
 ```
